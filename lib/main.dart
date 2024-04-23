@@ -1,4 +1,5 @@
 import 'package:ecartapp/screens/auth_screen/onboard_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,8 +9,10 @@ import 'language/app_localization.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   AppLanguageProvider appLanguage = AppLanguageProvider();
   await appLanguage.fetchLocale();
+  await Firebase.initializeApp();
   runApp( MyApp(
     appLanguage: appLanguage,
   ));
@@ -18,7 +21,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   AppLanguageProvider? appLanguage;
   MyApp({super.key, required this.appLanguage});
-
+  final Future<FirebaseApp> initialization = Firebase.initializeApp();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
